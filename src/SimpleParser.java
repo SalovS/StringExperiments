@@ -1,32 +1,38 @@
-import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SimpleParser {
     public void start(){
-        ArrayList<String> initials = enteringText();
-        System.out.println("Фамилия : " + initials.get(0));
-        System.out.println("Имя : "  + initials.get(1));
-        System.out.println("Отчество : "  + initials.get(2));
+        String[] initials = enteringText();
+        System.out.println("Фамилия : " + initials[0]);
+        System.out.println("Имя : "  + initials[1]);
+        System.out.println("Отчество : "  + initials[2]);
     }
-    private ArrayList<String> enteringText(){
-        Sumator sumator = new Sumator();
+
+    private String[] enteringText(){
         Scanner scanner = new Scanner(System.in);
-        ArrayList<String> words = new ArrayList<>();
+        String[] words = new String[3];
         boolean inputError = true;
         while(inputError) {
             System.out.println("Введите Фамилию, Имя и Отчество через пробел в одной строкой");
             String text = scanner.nextLine();
-            words = sumator.wordDivider(text);
-            if(words.size() == 3){
+            words = wordDivider(text);
+            if(words.length == 3){
                 inputError = false;
             }
         }
         return words;
     }
+
+    public String[] wordDivider(String text){
+        String[] parts = text.split("\\W+");
+        return parts;
+    }
+
     public String searchAndReplaceDiamonds(String text, String placeholder){
-        int firstSimbol = text.indexOf(placeholder.charAt(0));
-        int lastSimbol = text.lastIndexOf(placeholder.charAt(1));
-        String result = text.substring(0,firstSimbol) + "***" + text.substring(lastSimbol + 1,text.length());
-        return result;
+        Pattern pattern = Pattern.compile("<.+>");
+        Matcher matcher = pattern.matcher(text);
+        return matcher.replaceAll(placeholder);
     }
 }
