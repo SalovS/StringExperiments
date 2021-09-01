@@ -23,4 +23,10 @@ public class SimpleParser {
         }
         return words;
     }
+    public String searchAndReplaceDiamonds(String text, String placeholder){
+        int firstSimbol = text.indexOf(placeholder.charAt(0));
+        int lastSimbol = text.lastIndexOf(placeholder.charAt(1));
+        String result = text.substring(0,firstSimbol) + "***" + text.substring(lastSimbol + 1,text.length());
+        return result;
+    }
 }

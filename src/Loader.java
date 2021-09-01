@@ -15,5 +15,10 @@ public class Loader
 
         SimpleParser parser = new SimpleParser();
         parser.start();
+
+        String newText = "«Номер кредитной карты <4008 1234 5678> 8912»";
+        System.out.println(newText);
+        String safe = parser.searchAndReplaceDiamonds(newText, "<>");
+        System.out.println(safe);
     }
 }
