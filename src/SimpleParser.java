@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -12,22 +13,32 @@ public class SimpleParser {
 
     private String[] enteringText(){
         Scanner scanner = new Scanner(System.in);
-        String[] words = new String[3];
+        ArrayList<String> words = new ArrayList<>();
+        Pattern pattern = Pattern.compile("[A-ZА-Я][a-zа-я]+");
         boolean inputError = true;
         while(inputError) {
             System.out.println("Введите Фамилию, Имя и Отчество через пробел в одной строкой");
             String text = scanner.nextLine();
-            words = wordDivider(text);
-            if(words.length == 3){
+            Matcher matcher = pattern.matcher(text);
+            while(matcher.find()) {
+                words.add(matcher.group());
+            }
+            if(words.size() == 3){
                 inputError = false;
             }
         }
-        return words;
+        //scanner.close();
+        return words.toArray(new String[3]);
     }
 
     public String[] wordDivider(String text){
-        String[] parts = text.split("\\W+");
-        return parts;
+        ArrayList<String> words = new ArrayList<>();
+        Pattern pattern = Pattern.compile("[A-ZА-Яa-zа-я]+");
+        Matcher matcher = pattern.matcher(text);
+        while(matcher.find()){
+            words.add(matcher.group());
+        }
+        return words.toArray(new String[words.size()]);
     }
 
     public String searchAndReplaceDiamonds(String text, String placeholder){

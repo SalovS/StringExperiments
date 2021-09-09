@@ -5,15 +5,14 @@ import java.util.regex.Pattern;
 public class CheckingTheNumber {
     public void start() {
         Scanner scanner = new Scanner(System.in);
-        String text;
-        String number;
         while (true) {
             System.out.println("Введите номер телефона, для выхода введите Q");
-            text = scanner.nextLine();
+            String text = scanner.nextLine();
             if (text.toUpperCase().contains("Q")) {
+                scanner.close();
                 return;
             }
-            number = parsNumber(text);
+            String number = parsNumber(text);
             checkNumber(number);
         }
     }
